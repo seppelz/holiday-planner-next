@@ -1,0 +1,4803 @@
+.statePage {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 80px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.statePageContent {
+  box-sizing: border-box;
+}
+
+.statePageContent,
+.statePageContent::before,
+.statePageContent::after {
+  box-sizing: inherit;
+}
+
+.stateLink {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.stateLink:hover {
+  color: var(--theme-primary);
+}
+
+.pageBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
+}
+
+.holidayColumn,
+.stateOverviewSection,
+.seasonalSection,
+.vacationSection,
+.regionalSection {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.95));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 24px;
+  margin: 2rem auto;
+  max-width: 1600px;
+  width: calc(100% - 4rem);
+  overflow: hidden;
+  box-shadow: 
+    0 4px 20px rgba(26, 54, 93, 0.03),
+    0 2px 8px rgba(26, 54, 93, 0.02);
+}
+
+.holidayItem,
+.seasonCard,
+.vacationCard,
+.microInfoItem,
+.regionalCard {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.97));
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 6px rgba(26, 54, 93, 0.02),
+    0 1px 3px rgba(26, 54, 93, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.holidayItem:hover,
+.seasonCard:hover,
+.vacationCard:hover,
+.microInfoItem:hover,
+.regionalCard:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.95));
+  box-shadow: 
+    0 12px 20px rgba(26, 54, 93, 0.04),
+    0 4px 8px rgba(26, 54, 93, 0.06);
+  border-color: rgba(26, 54, 93, 0.12);
+}
+
+.stateHeader {
+  width: 100%;
+  min-height: calc(90vh - 80px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--state-gradient-full, var(--state-gradient-primary));
+  padding: 0;
+  overflow: hidden;
+}
+
+.animatedBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 95%, transparent),
+    color-mix(in srgb, var(--state-secondary-color) 95%, transparent)
+  );
+}
+
+.headerOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--state-primary-darker) 20%, transparent),
+    color-mix(in srgb, var(--state-secondary-darker) 20%, transparent)
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.headerContent {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  z-index: 2;
+  color: var(--state-text-on-primary);
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 1.5rem 0;
+  line-height: 1.2;
+  animation: slideUp 0.8s ease-out;
+  color: var(--state-text-on-primary);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  opacity: 0.95;
+  margin-bottom: 2rem;
+  animation: slideUp 0.8s ease-out 0.2s backwards;
+  color: var(--state-text-on-primary);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.heroStats {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  animation: slideUp 0.8s ease-out 0.1s backwards;
+}
+
+.statBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.3s ease;
+  background: color-mix(in srgb, white 10%, transparent);
+}
+
+.statBadge:hover {
+  transform: translateY(-2px);
+  background: color-mix(in srgb, white 15%, transparent);
+}
+
+.statNumber {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+.statDivider {
+  width: 1px;
+  height: 40px;
+  background: color-mix(in srgb, var(--state-text-on-primary) 20%, transparent);
+}
+
+@keyframes celestialGlow {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 
+      inset -8px -8px 16px rgba(0, 0, 0, 0.1),
+      0 0 30px rgba(255, 255, 255, 0.4),
+      0 0 60px rgba(255, 255, 255, 0.3),
+      0 0 90px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 
+      inset -8px -8px 16px rgba(0, 0, 0, 0.1),
+      0 0 40px rgba(255, 255, 255, 0.5),
+      0 0 80px rgba(255, 255, 255, 0.4),
+      0 0 120px rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes floatCloud {
+  0% {
+    transform: translateX(-100%) translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100vw) translateY(20px);
+    opacity: 0;
+  }
+}
+
+.heroActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  animation: slideUp 0.8s ease-out 0.6s backwards;
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-button-color, #4299e1);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.primaryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--primary-button-color, #2b6cb0);
+}
+
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--header-text-color, white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.secondaryButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.buttonIcon {
+  font-size: 1rem !important;
+  transition: transform 0.3s ease;
+}
+
+.primaryButton:hover .buttonIcon,
+.secondaryButton:hover .buttonIcon {
+  transform: translateX(4px);
+}
+
+/* Holiday Overview Section */
+.holidayOverview {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: var(--background-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.holidayGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.holidayColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.headerIcon {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.columnHeader h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text-color);
+}
+
+.columnHeader p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.holidayList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.holidayItem {
+  padding: 1rem;
+  background: var(--background-color-light);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--box-shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.holidayItem:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-md);
+}
+
+.holidayRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.holidayDate {
+  min-width: 100px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.dateSeparator {
+  margin: 0 0.5rem;
+  color: var(--text-secondary);
+}
+
+.holidayName {
+  flex: 1;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.duration {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: normal;
+}
+
+.regionalBadge {
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: var(--border-radius-sm);
+}
+
+.expandButton {
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.expandButton:hover {
+  color: var(--primary-color);
+}
+
+.expandIcon {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.expandButton[aria-expanded="true"] .expandIcon {
+  transform: rotate(180deg);
+}
+
+.holidayDetails {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.description {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.traditions, .locations, .familyActivities {
+  margin-top: 1rem;
+}
+
+.traditions h4, .locations h4, .familyActivities h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-color);
+}
+
+.traditionIcon, .locationIcon {
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+.traditions ul, .locations ul, .familyActivities ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.traditions li, .locations li, .familyActivities li {
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .holidayGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .holidayRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .holidayDate {
+    min-width: auto;
+  }
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section Navigation */
+.sectionNav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.sectionNav ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sectionNav a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  position: relative;
+  white-space: nowrap;
+}
+
+.sectionNav a:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--hover-color, #4299e1);
+  transform: scaleX(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+.sectionNav a:hover:after,
+.sectionNav a.active:after {
+  transform: scaleX(1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+  .holidayGrid {
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+  }
+  
+  .holidayColumn:first-child .holidayList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1200px) {
+  .holidayGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .holidayColumn:first-child .holidayList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .holidayOverview,
+  .stateOverviewSection,
+  .seasonalSection,
+  .vacationSection,
+  .regionalSection {
+    width: calc(100% - 2rem);
+  }
+  
+  .holidayGrid {
+    padding: 0 1rem;
+  }
+  
+  .holidayColumn:first-child .holidayList {
+    grid-template-columns: 1fr !important;
+    padding: 0.75rem;
+  }
+  
+  .holidayColumn:last-child .holidayList {
+    padding: 0.75rem;
+  }
+  
+  .holidayDate {
+    min-width: 100px;
+    font-size: 0.85rem;
+  }
+  
+  .holidayName {
+    font-size: 0.9rem;
+  }
+  
+  .duration {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.4rem;
+  }
+}
+/* Update all section max-widths */
+.holidayOverview,
+.stateOverviewSection,
+.seasonalSection,
+.vacationSection,
+.regionalSection,
+.ctaSection {
+  max-width: 1600px;
+  width: calc(100% - 4rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.regionalBadge {
+  background: linear-gradient(135deg, 
+    var(--landing-primary),
+    var(--landing-secondary)
+  );
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  margin-left: 0.75rem;
+  font-weight: 600;
+  transition: opacity var(--transition-fast);
+}
+
+.regionalBadge:hover {
+  opacity: var(--hover-opacity);
+}
+
+.duration {
+  font-size: 0.8rem;
+  color: #666 !important;
+  margin-left: 0.5rem;
+}
+
+.detailsButton {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: white;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0;
+}
+
+.detailsButton:hover {
+  background: #1a365d;
+  color: white;
+  border-color: #1a365d;
+}
+
+.detailsButton.active {
+  background: #1a365d;
+  color: white;
+  border-color: #1a365d;
+  transform: rotate(45deg);
+}
+
+/* Holiday Details Styles */
+.holidayDetails {
+  padding: 1.5rem;
+  background: linear-gradient(135deg,
+    rgba(var(--state-primary-rgb), 0.05),
+    rgba(var(--landing-primary-rgb), 0.08)
+  );
+  border-radius: 0 0 12px 12px;
+  margin-top: -0.5rem;
+  animation: slideDown var(--transition-normal);
+  border-top: 1px solid rgba(26, 54, 93, 0.08);
+}
+
+.description {
+  margin: 0 0 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.traditions,
+.locations,
+.familyActivities {
+  margin-top: 1.25rem;
+}
+
+.traditions h4,
+.locations h4,
+.familyActivities h4 {
+  color: var(--theme-primary);
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.traditions ul,
+.locations ul,
+.familyActivities ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.traditions li,
+.locations li,
+.familyActivities li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.traditions li:before,
+.locations li:before,
+.familyActivities li:before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: rgba(var(--state-primary-rgb), 0.8);
+  font-weight: bold;
+}
+
+.traditions li:last-child,
+.locations li:last-child,
+.familyActivities li:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .holidayDetails {
+    padding: 1.25rem 1rem;
+  }
+
+  .traditions h4,
+  .locations h4,
+  .familyActivities h4 {
+    font-size: 0.85rem;
+  }
+
+  .traditions li,
+  .locations li,
+  .familyActivities li {
+    font-size: 0.85rem;
+    padding-left: 1rem;
+    margin-bottom: 0.4rem;
+  }
+}
+
+/* Seasonal Section */
+.seasonalSection {
+  width: 100%;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.seasonalSection h2,
+.vacationSection h2 {
+  color: #1a365d;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.seasonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.seasonCard {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.seasonCard:hover {
+  transform: var(--hover-transform);
+  box-shadow: var(--shadow-lg);
+}
+
+.seasonCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, 
+    var(--landing-primary),
+    var(--landing-secondary)
+  );
+}
+
+.seasonIcon {
+  color: var(--landing-primary);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.seasonCard h3 {
+  font-size: 1.25rem;
+  margin: 0 0 0.75rem;
+  color: #1a365d;
+  font-weight: 700;
+}
+
+.seasonCard p {
+  margin: 0;
+  color: #444;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Season-specific styles with enhanced animations */
+.frühling .seasonIcon,
+.frühjahr .seasonIcon {
+  color: #10b981;
+  animation: springGrow 3s ease-in-out infinite;
+}
+
+.sommer .seasonIcon {
+  color: #f59e0b;
+  animation: summerSpin 4s ease-in-out infinite;
+}
+
+.herbst .seasonIcon {
+  color: #b45309;
+  animation: autumnFloat 3s ease-in-out infinite;
+}
+
+.winter .seasonIcon {
+  color: #3b82f6;
+  animation: winterGlitter 3s ease-in-out infinite;
+}
+
+/* Enhanced hover effects */
+.seasonCard:hover .seasonIcon {
+  transform: scale(1.2);
+}
+
+/* Season-specific animations */
+@keyframes springGrow {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.2));
+  }
+  50% {
+    transform: scale(1.15) rotate(10deg);
+    filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.4));
+  }
+}
+
+@keyframes summerSpin {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.2));
+  }
+  50% {
+    transform: scale(1.1) rotate(180deg);
+    filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.4));
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.2));
+  }
+}
+
+@keyframes autumnFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    filter: drop-shadow(0 0 8px rgba(180, 83, 9, 0.2));
+  }
+  25% {
+    transform: translateY(-5px) rotate(-5deg);
+    filter: drop-shadow(2px 4px 8px rgba(180, 83, 9, 0.3));
+  }
+  75% {
+    transform: translateY(5px) rotate(5deg);
+    filter: drop-shadow(-2px 4px 8px rgba(180, 83, 9, 0.3));
+  }
+}
+
+@keyframes winterGlitter {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.2));
+  }
+  25% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.4)) brightness(1.2);
+  }
+  50% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.2));
+  }
+  75% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.4)) brightness(1.2);
+  }
+}
+
+/* Add pseudo-elements for additional effects */
+.frühling .seasonIcon::before,
+.frühjahr .seasonIcon::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulseSpring 2s ease-in-out infinite;
+  z-index: -1;
+}
+
+.sommer .seasonIcon::before {
+  content: '';
+  position: absolute;
+  top: -15%;
+  left: -15%;
+  right: -15%;
+  bottom: -15%;
+  background: radial-gradient(circle at center, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulseSummer 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+.herbst .seasonIcon::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  right: -20%;
+  bottom: -20%;
+  background: radial-gradient(circle at center, rgba(180, 83, 9, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulseAutumn 4s ease-in-out infinite;
+  z-index: -1;
+}
+
+.winter .seasonIcon::before {
+  content: '';
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  right: -25%;
+  bottom: -25%;
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulseWinter 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes pulseSpring {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+@keyframes pulseSummer {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.5; }
+  50% { transform: scale(1.3) rotate(180deg); opacity: 0.8; }
+}
+
+@keyframes pulseAutumn {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.4); opacity: 0.8; }
+}
+
+@keyframes pulseWinter {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.5); opacity: 0.6; }
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes floatCloud {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fly {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(var(--x-end, 100px), var(--y-end, -50px));
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .headerContent {
+    padding: 2rem 1rem;
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+
+  .heroStats {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .statBadge {
+    width: 100%;
+  }
+
+  .statDivider {
+    display: none;
+    width: 80%;
+    height: 1px;
+  }
+
+  .promoStats {
+    flex-direction: column;
+  }
+
+  .promoFeatures {
+    grid-template-columns: 1fr;
+  }
+
+  .holidayOverview {
+    margin-top: -50px;
+    padding: 0 1rem;
+  }
+
+  .holidayGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .seasonGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .holidayDate {
+    min-width: 100px;
+    font-size: 0.8rem;
+  }
+
+  .holidayName {
+    font-size: 0.9rem;
+  }
+
+  .duration {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.4rem;
+  }
+} 
+
+/* Celestial Body (Sun) */
+.celestialBody {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  top: 10%;
+  right: 10%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.85) 20%,
+    rgba(255, 255, 255, 0.75) 40%,
+    rgba(255, 255, 255, 0.6) 60%,
+    rgba(255, 255, 255, 0.4) 80%
+  );
+  box-shadow: 
+    inset -8px -8px 16px rgba(0, 0, 0, 0.1),
+    0 0 30px rgba(255, 255, 255, 0.4),
+    0 0 60px rgba(255, 255, 255, 0.3),
+    0 0 90px rgba(255, 255, 255, 0.2);
+  animation: celestialGlow 6s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform, box-shadow;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.celestialBody::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  background: radial-gradient(
+    circle at center,
+    var(--state-primary-color) 0%,
+    transparent 70%
+  );
+  opacity: 0.3;
+  border-radius: 50%;
+  animation: celestialPulse 4s ease-in-out infinite;
+  z-index: -1;
+}
+
+.celestialBody::after {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(
+    circle at center,
+    var(--state-secondary-color) 0%,
+    transparent 60%
+  );
+  opacity: 0.2;
+  border-radius: 50%;
+  animation: celestialPulse 4s ease-in-out infinite 1s;
+  z-index: -2;
+}
+
+@keyframes celestialGlow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 
+      inset -8px -8px 16px rgba(0, 0, 0, 0.1),
+      0 0 30px rgba(255, 255, 255, 0.4),
+      0 0 60px rgba(255, 255, 255, 0.3),
+      0 0 90px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 
+      inset -8px -8px 16px rgba(0, 0, 0, 0.1),
+      0 0 40px rgba(255, 255, 255, 0.5),
+      0 0 80px rgba(255, 255, 255, 0.4),
+      0 0 120px rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes celestialPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.3;
+  }
+}
+
+/* Add performance optimizations for the animations */
+@media (prefers-reduced-motion: reduce) {
+  .celestialBody {
+    animation: none;
+  }
+  
+  .celestialBody::before,
+  .celestialBody::after {
+    animation: none;
+  }
+}
+
+/* Optimize for mobile devices */
+@media (max-width: 768px) {
+  .celestialBody {
+    width: 80px;
+    height: 80px;
+    top: 15%;
+    right: 15%;
+  }
+}
+
+/* Clouds with more organic shapes */
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  animation: floatCloud 20s linear infinite;
+  filter: blur(1px);
+}
+
+.cloud:before,
+.cloud:after,
+.cloud span:before,
+.cloud span:after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.cloud:nth-child(1) {
+  width: 120px;
+  height: 35px;
+  top: 25%;
+  left: -120px;
+  animation-delay: 0s;
+}
+
+.cloud:nth-child(1):before {
+  width: 45px;
+  height: 45px;
+  top: -25px;
+  left: 15px;
+}
+
+.cloud:nth-child(1):after {
+  width: 35px;
+  height: 35px;
+  top: -18px;
+  left: 45px;
+}
+
+.cloud:nth-child(1) span:before {
+  width: 40px;
+  height: 40px;
+  top: -20px;
+  left: 65px;
+}
+
+.cloud:nth-child(2) {
+  width: 180px;
+  height: 45px;
+  top: 45%;
+  left: -180px;
+  animation-delay: 5s;
+}
+
+.cloud:nth-child(2):before {
+  width: 70px;
+  height: 70px;
+  top: -35px;
+  left: 25px;
+}
+
+.cloud:nth-child(2):after {
+  width: 55px;
+  height: 55px;
+  top: -25px;
+  left: 75px;
+}
+
+.cloud:nth-child(2) span:before {
+  width: 65px;
+  height: 65px;
+  top: -30px;
+  left: 100px;
+}
+
+.cloud:nth-child(2) span:after {
+  width: 45px;
+  height: 45px;
+  top: -15px;
+  left: 120px;
+}
+
+.cloud:nth-child(3) {
+  width: 140px;
+  height: 40px;
+  top: 65%;
+  left: -140px;
+  animation-delay: 10s;
+}
+
+.cloud:nth-child(3):before {
+  width: 50px;
+  height: 50px;
+  top: -28px;
+  left: 20px;
+}
+
+.cloud:nth-child(3):after {
+  width: 40px;
+  height: 40px;
+  top: -20px;
+  left: 55px;
+}
+
+.cloud:nth-child(3) span:before {
+  width: 45px;
+  height: 45px;
+  top: -22px;
+  left: 85px;
+}
+
+.cloud:nth-child(4) {
+  width: 160px;
+  height: 42px;
+  top: 85%;
+  left: -160px;
+  animation-delay: 15s;
+}
+
+.cloud:nth-child(4):before {
+  width: 60px;
+  height: 60px;
+  top: -32px;
+  left: 22px;
+}
+
+.cloud:nth-child(4):after {
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  left: 60px;
+}
+
+.cloud:nth-child(4) span:before {
+  width: 55px;
+  height: 55px;
+  top: -28px;
+  left: 90px;
+}
+
+.cloud:nth-child(4) span:after {
+  width: 42px;
+  height: 42px;
+  top: -18px;
+  left: 110px;
+}
+
+/* Palm tree */
+.palmTree {
+  position: absolute;
+  bottom: -20px;
+  left: 10%;
+  width: 40px;
+  height: 200px;
+  transform-origin: bottom center;
+  animation: sway 8s ease-in-out infinite;
+  z-index: 2;
+}
+
+.trunk {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 20px;
+  height: 140px;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-50%);
+  border-radius: 10px;
+}
+
+.leaves {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.leaf {
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  transform-origin: 0 center;
+}
+
+.leaf:nth-child(1) { transform: rotate(-20deg) translateX(-50%); }
+.leaf:nth-child(2) { transform: rotate(20deg) translateX(-50%); }
+.leaf:nth-child(3) { transform: rotate(-50deg) translateX(-50%); }
+.leaf:nth-child(4) { transform: rotate(50deg) translateX(-50%); }
+
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+} 
+
+/* Dandelion */
+.dandelion {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 60px;
+  height: 120px;
+  z-index: 2;
+  transform-origin: bottom center;
+  transform: rotate(15deg);
+  animation: gentleSway 6s ease-in-out infinite;
+}
+
+.dandelionStem {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+  transform: translateX(-50%);
+}
+
+.dandelionHead {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  transform: translateX(-50%);
+}
+
+.dandelionCore {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.seed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+}
+
+.seedCore {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  height: 2px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.seedParachute {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 8px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50% 50% 0 0;
+  transform: translateX(-50%);
+}
+
+/* Generate 24 attached seeds */
+.seed:nth-child(1) { transform: rotate(0deg) translateY(-20px); }
+.seed:nth-child(2) { transform: rotate(15deg) translateY(-20px); }
+.seed:nth-child(3) { transform: rotate(30deg) translateY(-20px); }
+.seed:nth-child(4) { transform: rotate(45deg) translateY(-20px); }
+.seed:nth-child(5) { transform: rotate(60deg) translateY(-20px); }
+.seed:nth-child(6) { transform: rotate(75deg) translateY(-20px); }
+.seed:nth-child(7) { transform: rotate(90deg) translateY(-20px); }
+.seed:nth-child(8) { transform: rotate(105deg) translateY(-20px); }
+.seed:nth-child(9) { transform: rotate(120deg) translateY(-20px); }
+.seed:nth-child(10) { transform: rotate(135deg) translateY(-20px); }
+.seed:nth-child(11) { transform: rotate(150deg) translateY(-20px); }
+.seed:nth-child(12) { transform: rotate(165deg) translateY(-20px); }
+.seed:nth-child(13) { transform: rotate(180deg) translateY(-20px); }
+.seed:nth-child(14) { transform: rotate(195deg) translateY(-20px); }
+.seed:nth-child(15) { transform: rotate(210deg) translateY(-20px); }
+.seed:nth-child(16) { transform: rotate(225deg) translateY(-20px); }
+.seed:nth-child(17) { transform: rotate(240deg) translateY(-20px); }
+.seed:nth-child(18) { transform: rotate(255deg) translateY(-20px); }
+.seed:nth-child(19) { transform: rotate(270deg) translateY(-20px); }
+.seed:nth-child(20) { transform: rotate(285deg) translateY(-20px); }
+.seed:nth-child(21) { transform: rotate(300deg) translateY(-20px); }
+.seed:nth-child(22) { transform: rotate(315deg) translateY(-20px); }
+.seed:nth-child(23) { transform: rotate(330deg) translateY(-20px); }
+.seed:nth-child(24) { transform: rotate(345deg) translateY(-20px); }
+
+/* Flying seeds */
+.flyingSeed {
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.flyingSeed .seedCore {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.flyingSeed .seedParachute {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 8px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50% 50% 0 0;
+  transform: translateX(-50%);
+}
+
+.flyingSeed:nth-child(1) {
+  top: 0;
+  left: 0;
+  animation: fly1 8s linear infinite;
+}
+
+.flyingSeed:nth-child(2) {
+  top: 5px;
+  left: 5px;
+  animation: fly2 7s linear infinite 1s;
+}
+
+.flyingSeed:nth-child(3) {
+  top: -5px;
+  left: -5px;
+  animation: fly3 9s linear infinite 2s;
+}
+
+.flyingSeed:nth-child(4) {
+  top: 10px;
+  left: 2px;
+  animation: fly4 6s linear infinite 3s;
+}
+
+.flyingSeed:nth-child(5) {
+  top: -8px;
+  left: -2px;
+  animation: fly5 8s linear infinite 4s;
+}
+
+.flyingSeed:nth-child(6) {
+  top: 3px;
+  left: 3px;
+  animation: fly6 7s linear infinite 5s;
+}
+
+/* Flying seed animations */
+@keyframes fly1 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100px, -100px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fly2 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(120px, -80px) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fly3 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(80px, -120px) rotate(660deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fly4 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(110px, -90px) rotate(480deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fly5 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(90px, -110px) rotate(600deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fly6 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(130px, -70px) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+/* Performance optimizations for animations */
+.cloud, .dandelion, .celestialBody, .flyingSeed {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Seasonal Decorations Container */
+.seasonalDecorations {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 0 5%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Spring - Dandelion */
+.springDandelion {
+  position: relative;
+  width: 60px;
+  height: 120px;
+  transform-origin: bottom center;
+  transform: rotate(15deg);
+  animation: gentleSway 6s ease-in-out infinite;
+  z-index: 1;
+}
+
+.dandelionStem {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
+  transform: translateX(-50%);
+}
+
+.dandelionHead {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.dandelionCore {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.8));
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.seed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+}
+
+.seedCore {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  height: 2px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.seedParachute {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 6px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50% 50% 0 0;
+  transform: translateX(-50%);
+}
+
+/* Generate 24 attached seeds */
+.seed:nth-child(1) { transform: rotate(0deg) translateY(-16px); }
+.seed:nth-child(2) { transform: rotate(15deg) translateY(-16px); }
+.seed:nth-child(3) { transform: rotate(30deg) translateY(-16px); }
+.seed:nth-child(4) { transform: rotate(45deg) translateY(-16px); }
+.seed:nth-child(5) { transform: rotate(60deg) translateY(-16px); }
+.seed:nth-child(6) { transform: rotate(75deg) translateY(-16px); }
+.seed:nth-child(7) { transform: rotate(90deg) translateY(-16px); }
+.seed:nth-child(8) { transform: rotate(105deg) translateY(-16px); }
+.seed:nth-child(9) { transform: rotate(120deg) translateY(-16px); }
+.seed:nth-child(10) { transform: rotate(135deg) translateY(-16px); }
+.seed:nth-child(11) { transform: rotate(150deg) translateY(-16px); }
+.seed:nth-child(12) { transform: rotate(165deg) translateY(-16px); }
+.seed:nth-child(13) { transform: rotate(180deg) translateY(-16px); }
+.seed:nth-child(14) { transform: rotate(195deg) translateY(-16px); }
+.seed:nth-child(15) { transform: rotate(210deg) translateY(-16px); }
+.seed:nth-child(16) { transform: rotate(225deg) translateY(-16px); }
+.seed:nth-child(17) { transform: rotate(240deg) translateY(-16px); }
+.seed:nth-child(18) { transform: rotate(255deg) translateY(-16px); }
+.seed:nth-child(19) { transform: rotate(270deg) translateY(-16px); }
+.seed:nth-child(20) { transform: rotate(285deg) translateY(-16px); }
+.seed:nth-child(21) { transform: rotate(300deg) translateY(-16px); }
+.seed:nth-child(22) { transform: rotate(315deg) translateY(-16px); }
+.seed:nth-child(23) { transform: rotate(330deg) translateY(-16px); }
+.seed:nth-child(24) { transform: rotate(345deg) translateY(-16px); }
+
+/* Flying seeds */
+.flyingSeed {
+  position: absolute;
+  width: 8px;
+  height: 12px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.flyingSeed .seedCore {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  height: 2px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+}
+
+.flyingSeed .seedParachute {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 6px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50% 50% 0 0;
+  transform: translateX(-50%);
+}
+
+/* Flying seed positions and animations */
+.flyingSeed:nth-child(1) {
+  top: 20%;
+  left: 120%;
+  animation: flyRight1 4s linear infinite;
+}
+
+.flyingSeed:nth-child(2) {
+  top: 10%;
+  left: 110%;
+  animation: flyRight2 5s linear infinite 1s;
+}
+
+.flyingSeed:nth-child(3) {
+  top: 30%;
+  left: 130%;
+  animation: flyRight3 6s linear infinite 2s;
+}
+
+.flyingSeed:nth-child(4) {
+  top: 15%;
+  left: 125%;
+  animation: flyRight4 4.5s linear infinite 3s;
+}
+
+.flyingSeed:nth-child(5) {
+  top: 25%;
+  left: 115%;
+  animation: flyRight5 5.5s linear infinite 4s;
+}
+
+.flyingSeed:nth-child(6) {
+  top: 35%;
+  left: 135%;
+  animation: flyRight6 4.8s linear infinite 5s;
+}
+
+/* Flying seed animations */
+@keyframes flyRight1 {
+  0% {
+    transform: translate(-120%, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100px, -50px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flyRight2 {
+  0% {
+    transform: translate(-110%, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(120px, -30px) rotate(420deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flyRight3 {
+  0% {
+    transform: translate(-130%, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(90px, -70px) rotate(300deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flyRight4 {
+  0% {
+    transform: translate(-125%, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(110px, -40px) rotate(380deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flyRight5 {
+  0% {
+    transform: translate(-115%, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100px, -60px) rotate(340deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flyRight6 {
+  0% {
+    transform: translate(-135%, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(80px, -80px) rotate(400deg);
+    opacity: 0;
+  }
+}
+
+@keyframes gentleSway {
+  0%, 100% {
+    transform: rotate(12deg);
+  }
+  50% {
+    transform: rotate(18deg);
+  }
+}
+
+/* Summer - Sunflower */
+.sunflower {
+  position: relative;
+  width: 60px;
+  height: 120px;
+  transform-origin: bottom center;
+  transform: rotate(10deg);
+  animation: gentleSway 6s ease-in-out infinite;
+}
+
+.sunflowerStem {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
+  transform: translateX(-50%);
+}
+
+.sunflowerHead {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  transform: translate(-50%, 0);
+}
+
+.sunflowerCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.sunflowerPetal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50% 50% 0 0;
+  transform-origin: center bottom;
+}
+
+/* Generate 12 petals */
+.sunflowerPetal:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg); }
+.sunflowerPetal:nth-child(2) { transform: translate(-50%, -50%) rotate(30deg); }
+.sunflowerPetal:nth-child(3) { transform: translate(-50%, -50%) rotate(60deg); }
+.sunflowerPetal:nth-child(4) { transform: translate(-50%, -50%) rotate(90deg); }
+.sunflowerPetal:nth-child(5) { transform: translate(-50%, -50%) rotate(120deg); }
+.sunflowerPetal:nth-child(6) { transform: translate(-50%, -50%) rotate(150deg); }
+.sunflowerPetal:nth-child(7) { transform: translate(-50%, -50%) rotate(180deg); }
+.sunflowerPetal:nth-child(8) { transform: translate(-50%, -50%) rotate(210deg); }
+.sunflowerPetal:nth-child(9) { transform: translate(-50%, -50%) rotate(240deg); }
+.sunflowerPetal:nth-child(10) { transform: translate(-50%, -50%) rotate(270deg); }
+.sunflowerPetal:nth-child(11) { transform: translate(-50%, -50%) rotate(300deg); }
+.sunflowerPetal:nth-child(12) { transform: translate(-50%, -50%) rotate(330deg); }
+
+/* Autumn - Falling Leaves */
+.mapleLeaf {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  transform-origin: bottom center;
+  z-index: 2;
+}
+
+.fallingLeaf {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  clip-path: polygon(
+    50% 0,    /* Top point */
+    65% 15%,  /* Upper right curve start */
+    90% 25%,  /* Right lobe top */
+    75% 45%,  /* Right lobe indent */
+    95% 45%,  /* Right point */
+    80% 60%,  /* Lower right curve */
+    85% 75%,  /* Bottom right lobe */
+    50% 100%, /* Bottom point */
+    15% 75%,  /* Bottom left lobe */
+    20% 60%,  /* Lower left curve */
+    5% 45%,   /* Left point */
+    25% 45%,  /* Left lobe indent */
+    10% 25%,  /* Left lobe top */
+    35% 15%   /* Upper left curve start */
+  );
+  opacity: 0;
+  animation: fallAndDrift 8s linear infinite;
+  animation-delay: var(--fall-delay);
+  will-change: transform, opacity;
+}
+
+@keyframes fallAndDrift {
+  0% {
+    transform: translate(0, -20px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  25% {
+    transform: translate(15px, 20px) rotate(90deg);
+  }
+  50% {
+    transform: translate(30px, 60px) rotate(180deg);
+  }
+  75% {
+    transform: translate(45px, 100px) rotate(270deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(60px, 160px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Winter - Mountain Scene */
+.snowflake {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  transform-origin: bottom center;
+  z-index: 2;
+}
+
+.mountainScene {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mountain {
+  position: absolute;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.mountain:nth-child(1) {
+  left: 0;
+  width: 70px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.mountain:nth-child(2) {
+  left: 30px;
+  width: 90px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.mountain:nth-child(3) {
+  right: 0;
+  width: 60px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.snow {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+  animation: snowfall 4s linear infinite;
+}
+
+/* Animations */
+@keyframes gentleSway {
+  0%, 100% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+@keyframes spinLeaf {
+  0% {
+    transform: rotate(0deg) scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+    filter: brightness(1.2);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translate(0, -20px);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x-end), var(--y-end));
+    opacity: 0;
+  }
+}
+
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+/* Media Queries */
+@media (min-width: 769px) {
+  .seasonalDecorations {
+    padding: 0 10%;
+  }
+}
+
+.holidayColumn:nth-child(1) .holidayRow {
+  background: #fafbff;
+  border-color: rgba(66, 153, 225, 0.2);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.holidayColumn:nth-child(1) .holidayRow:hover {
+  background: #f0f5ff;
+  transform: translateY(-2px);
+  border-color: rgba(66, 153, 225, 0.4);
+}
+
+.holidayColumn:nth-child(1) .duration {
+  background: rgba(26, 54, 93, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: #1a365d;
+  margin-left: 0.75rem;
+  font-weight: 500;
+}
+
+.holidayColumn:nth-child(1) .holidayDate {
+  color: #1a365d;
+  font-weight: 500;
+  min-width: 140px;
+  margin-right: 1.5rem;
+}
+
+.holidayColumn:nth-child(1) .dateSeparator {
+  color: #1a365d;
+  opacity: 0.5;
+}
+
+.holidayColumn:nth-child(1) .headerIcon {
+  color: #1a365d;
+  font-size: 1.25rem !important;
+  opacity: 0.9;
+  margin-right: 0.5rem;
+}
+
+/* Vacation Section */
+.vacationSection {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 3%, white 97%),
+    color-mix(in srgb, var(--landing-secondary) 5%, white 95%)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 24px;
+  margin: 2rem auto;
+  max-width: 1600px;
+  width: calc(100% - 4rem);
+  overflow: hidden;
+  box-shadow: 
+    0 4px 20px rgba(26, 54, 93, 0.03),
+    0 2px 8px rgba(26, 54, 93, 0.02);
+  padding: 2rem;
+}
+
+.vacationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.vacationCard {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 2%, white 98%),
+    color-mix(in srgb, var(--theme-primary) 3%, white 97%)
+  );
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 6px rgba(26, 54, 93, 0.02),
+    0 1px 3px rgba(26, 54, 93, 0.04);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.vacationCard:hover {
+  transform: var(--hover-transform);
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 4%, white 96%),
+    color-mix(in srgb, var(--theme-primary) 5%, white 95%)
+  );
+  border-color: rgba(26, 54, 93, 0.12);
+}
+
+.destinationHeader {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.08);
+  background: linear-gradient(135deg,
+    var(--theme-primary),
+    var(--theme-secondary)
+  );
+  color: white;
+}
+
+.destinationHeader h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: white;
+  font-weight: 600;
+}
+
+.destinationIcon {
+  font-size: 1.5rem;
+  color: white;
+  opacity: 0.9;
+}
+
+.destinationContent {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.destinationDescription {
+  margin: 0 0 1.5rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.destinationDetails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: auto;
+}
+
+.attractionsSection,
+.activitiesSection {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 1%, white 99%),
+    color-mix(in srgb, var(--theme-primary) 2%, white 98%)
+  );
+  border: 1px solid rgba(26, 54, 93, 0.06);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.sectionHeader h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.sectionIcon {
+  font-size: 1.25rem;
+  color: var(--theme-secondary);
+}
+
+.attractionsSection ul,
+.activitiesSection ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.attractionsSection li,
+.activitiesSection li {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.attractionsSection li:last-child,
+.activitiesSection li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.attractionsSection li::before,
+.activitiesSection li::before {
+  content: '•';
+  color: var(--theme-secondary);
+  opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .vacationSection {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+  }
+
+  .vacationGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .destinationHeader {
+    padding: 1.25rem;
+  }
+
+  .destinationHeader h3 {
+    font-size: 1.1rem;
+  }
+
+  .destinationContent {
+    padding: 1.25rem;
+  }
+
+  .destinationDescription {
+    font-size: 0.9rem;
+  }
+
+  .destinationDetails {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .attractionsSection,
+  .activitiesSection {
+    padding: 1rem;
+  }
+
+  .sectionHeader h4 {
+    font-size: 0.95rem;
+  }
+
+  .attractionsSection li,
+  .activitiesSection li {
+    font-size: 0.85rem;
+  }
+}
+
+.holidayColumn:nth-child(1) .headerIcon {
+  color: #1a365d;  /* Theme color for public holidays */
+  font-size: 1.25rem !important;
+  opacity: 0.9;
+  margin-right: 0.5rem;
+}
+
+.holidayColumn:nth-child(2) .headerIcon {
+  font-size: 1.75rem;
+  opacity: 0.9;
+}
+
+.holidayColumn:nth-child(2) .holidayDate {
+  min-width: 140px;
+  font-size: 0.9rem;
+  color: #666 !important;
+  margin-right: 2rem;
+}
+
+.stateOverviewSection {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stateOverviewSection h2 {
+  color: #1a365d;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.microInfoBar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: linear-gradient(135deg,
+    rgba(var(--state-primary-rgb), 0.05),
+    rgba(var(--landing-secondary-rgb), 0.08)
+  );
+  border-radius: 16px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  box-shadow: 
+    0 4px 12px rgba(26, 54, 93, 0.03),
+    0 2px 4px rgba(26, 54, 93, 0.02);
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.microInfoItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  transition: all var(--transition-normal);
+  min-width: fit-content;
+  flex: 0 1 auto;
+}
+
+.microInfoIcon {
+  color: var(--theme-primary);
+  font-size: 1rem !important;
+  opacity: 0.9;
+}
+
+.microInfoLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin-right: 0.25rem;
+}
+
+.microInfoValue {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+.microInfoTags {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.microInfoTag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(var(--landing-primary-rgb), 0.15);
+  border-radius: 999px;
+  color: var(--landing-primary);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.microInfoTag:hover {
+  background: rgba(var(--landing-primary-rgb), 0.2);
+}
+
+/* Update section spacing */
+.stateOverviewSection {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+}
+
+.stateOverviewSection h2 {
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+}
+
+.stateDescription {
+  padding: 0.75rem 1rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .microInfoBar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 1rem;
+    gap: 0.75rem;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+  }
+
+  .microInfoBar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+  }
+
+  .microInfoItem {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
+.stateDescription {
+  color: #4a5568;
+  line-height: 1.6;
+  font-size: 1rem;
+  text-align: center;
+  padding: 1rem;
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 2rem;
+}
+
+.stateDescription::before {
+  content: '"';
+  position: absolute;
+  top: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  color: #1a365d;
+  opacity: 0.1;
+  font-family: Georgia, serif;
+}
+
+.seasonalTraditions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.seasonCard {
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.seasonCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.seasonIcon {
+  color: var(--landing-primary);
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.seasonContent {
+  flex: 1;
+}
+
+.seasonCard h3 {
+  font-size: 1rem;
+  margin: 0 0 0.25rem;
+  color: #1a365d;
+  font-weight: 600;
+}
+
+.seasonCard p {
+  margin: 0;
+  color: #4a5568;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 1024px) {
+  .microInfoBar {
+    gap: 1.5rem;
+    padding: 1rem 0.5rem;
+  }
+  
+  .microInfoItem {
+    gap: 0.5rem;
+  }
+  
+  .seasonalTraditions {
+    grid-template-columns: 1fr;
+  }
+  
+  .seasonCard {
+    padding: 1rem;
+  }
+  
+  .stateDescription {
+    text-align: left;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .microInfoBar {
+    gap: 1rem;
+    justify-content: flex-start;
+    padding: 1rem 0;
+    overflow-x: auto;
+  }
+  
+  .microInfoItem {
+    flex-shrink: 0;
+  }
+  
+  .seasonalTraditions {
+    grid-template-columns: 1fr;
+  }
+  
+  .seasonCard {
+    padding: 1rem;
+  }
+  
+  .stateDescription {
+    text-align: left;
+    font-size: 0.95rem;
+  }
+}
+
+/* Regional Specialties Section */
+.regionalSection {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 3%, white 97%),
+    color-mix(in srgb, var(--landing-secondary) 5%, white 95%)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 24px;
+  margin: 2rem auto;
+  max-width: 1600px;
+  width: calc(100% - 4rem);
+  overflow: hidden;
+  box-shadow: 
+    0 4px 20px rgba(26, 54, 93, 0.03),
+    0 2px 8px rgba(26, 54, 93, 0.02);
+  padding: 2rem;
+}
+
+.regionalGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.regionalCard {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 2%, white 98%),
+    color-mix(in srgb, var(--theme-primary) 3%, white 97%)
+  );
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 6px rgba(26, 54, 93, 0.02),
+    0 1px 3px rgba(26, 54, 93, 0.04);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.regionalCard:hover {
+  transform: var(--hover-transform);
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 4%, white 96%),
+    color-mix(in srgb, var(--theme-primary) 5%, white 95%)
+  );
+  border-color: rgba(26, 54, 93, 0.12);
+}
+
+.regionalHeader {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(26, 54, 93, 0.08);
+}
+
+.regionalHeader h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.regionalIcon {
+  font-size: 1.5rem;
+  color: var(--theme-primary);
+}
+
+.regionalContent {
+  padding: 1.5rem;
+}
+
+.regionalList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.regionalItem {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.regionalItemIcon {
+  font-size: 1.25rem;
+  color: var(--theme-secondary);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.regionalItemContent {
+  flex: 1;
+}
+
+.regionalItemTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.regionalItemDescription {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .regionalSection {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+  }
+
+  .regionalGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .regionalHeader {
+    padding: 1.25rem;
+  }
+
+  .regionalHeader h3 {
+    font-size: 1.1rem;
+  }
+
+  .regionalContent {
+    padding: 1.25rem;
+  }
+
+  .regionalItemTitle {
+    font-size: 1rem;
+  }
+
+  .regionalItemDescription {
+    font-size: 0.9rem;
+  }
+}
+
+/* High Contrast Mode */
+@media (forced-colors: active) {
+  .regionalCard {
+    border: 1px solid CanvasText;
+  }
+  
+  .regionalIcon,
+  .regionalItemIcon {
+    forced-color-adjust: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .regionalSection {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .regionalCard {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 1px solid #000;
+  }
+}
+
+/* Enhanced button styles - now properly scoped */
+.primaryButton, .secondaryButton {
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.primaryButton::after, .secondaryButton::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.5s ease-out, opacity 0.3s ease-out;
+}
+
+.primaryButton:hover::after, .secondaryButton:hover::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.primaryButton:hover, .secondaryButton:hover {
+  transform: var(--hover-transform);
+  box-shadow: var(--shadow-md);
+}
+
+.primaryButton:active, .secondaryButton:active {
+  transform: var(--active-transform);
+}
+
+/* Update header backgrounds */
+.columnHeader,
+.regionalHeader,
+.destinationHeader,
+.sectionHeader {
+  background: linear-gradient(135deg, 
+    var(--landing-primary),
+    var(--landing-secondary)
+  );
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.columnHeader::after,
+.regionalHeader::after,
+.destinationHeader::after,
+.sectionHeader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.03)
+  );
+  pointer-events: none;
+}
+
+.columnHeader h2,
+.regionalHeader h3,
+.destinationHeader h3,
+.sectionHeader h4,
+.columnHeader p {
+  color: white;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.headerIcon,
+.regionalIcon,
+.destinationIcon,
+.sectionIcon {
+  color: var(--landing-primary) !important;
+  font-size: 1.75rem;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+/* Section titles */
+.holidayOverview h2,
+.stateOverviewSection h2,
+.seasonalSection h2,
+.vacationSection h2,
+.regionalSection h2 {
+  color: #1a365d;
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
+  position: relative;
+  letter-spacing: -0.02em;
+}
+
+.holidayOverview h2:not(.columnHeader h2)::after,
+.stateOverviewSection h2:not(.columnHeader h2)::after,
+.seasonalSection h2:not(.columnHeader h2)::after,
+.vacationSection h2:not(.columnHeader h2)::after,
+.regionalSection h2:not(.columnHeader h2)::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(135deg, 
+    var(--landing-primary),
+    var(--landing-secondary)
+  );
+  border-radius: 2px;
+}
+
+/* Add subtle section transitions */
+.holidayOverview,
+.stateOverviewSection,
+.seasonalSection,
+.vacationSection,
+.regionalSection {
+  position: relative;
+  z-index: 1;
+  margin-top: 4rem;
+  padding-top: 2rem;
+}
+
+/* Add subtle section separators */
+.holidayOverview::before,
+.stateOverviewSection::before,
+.seasonalSection::before,
+.vacationSection::before,
+.regionalSection::before {
+  content: '';
+  position: absolute;
+  top: -2rem;
+  left: 0;
+  right: 0;
+  height: 2rem;
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(0, 0, 0, 0.02)
+  );
+  pointer-events: none;
+}
+
+/* Enhanced Interactive Elements */
+.interactiveElement {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.interactiveElement::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(26, 54, 93, 0.1), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.interactiveElement:hover::after {
+  opacity: 1;
+}
+
+/* Improved Button Styles */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.button:hover::before {
+  opacity: 1;
+}
+
+/* Smooth Scroll Behavior */
+.scrollContainer {
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Enhanced Loading States */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.loading {
+  background: linear-gradient(
+    90deg,
+    rgba(26, 54, 93, 0.03) 25%,
+    rgba(26, 54, 93, 0.06) 37%,
+    rgba(26, 54, 93, 0.03) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Improved Focus States */
+:focus-visible {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
+}
+
+/* Enhanced Hover Effects */
+.hoverEffect {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hoverEffect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(26, 54, 93, 0.08);
+}
+
+/* Improved Scroll Indicators */
+.scrollIndicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--landing-primary),
+    var(--landing-secondary)
+  );
+  transform-origin: 0 50%;
+  z-index: 1000;
+}
+
+/* Enhanced Tooltips */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  padding: 0.5rem 1rem;
+  background: var(--theme-primary);
+  color: white;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+.tooltip:hover::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+/* Improved Micro-animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeInUp {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.scaleIn {
+  animation: scaleIn 0.3s ease forwards;
+}
+
+/* Enhanced Card Interactions */
+.card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card:hover {
+  transform: translateY(-4px) rotateX(2deg) rotateY(2deg);
+  box-shadow: 
+    0 12px 24px rgba(26, 54, 93, 0.06),
+    0 4px 8px rgba(26, 54, 93, 0.04);
+}
+
+/* Improved Section Transitions */
+.section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Enhanced Loading Spinners */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(26, 54, 93, 0.1);
+  border-top-color: var(--theme-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Performance Optimizations */
+.optimizedAnimation {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+
+
+/* Print Styles */
+@media print {
+  .noPrint {
+    display: none !important;
+  }
+  
+  .printOnly {
+    display: block !important;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  .card,
+  .section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+/* High Contrast Mode */
+@media (forced-colors: active) {
+  .card,
+  .button,
+  .badge {
+    border: 1px solid CanvasText;
+  }
+  
+  .icon {
+    forced-color-adjust: none;
+  }
+}
+
+/* Enhanced Focus Styles */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(26, 54, 93, 0.1);
+}
+
+/* Skip Links */
+.skipLink {
+  position: fixed;
+  top: -100%;
+  left: 0;
+  padding: 1rem;
+  background: var(--theme-primary);
+  color: white;
+  z-index: 9999;
+  transition: top 0.3s;
+}
+
+.skipLink:focus {
+  top: 0;
+}
+
+/* Screen Reader Only */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* Loading States */
+.loadingState {
+  position: relative;
+  overflow: hidden;
+}
+
+.loadingState::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+/* Error States */
+.errorState {
+  border-color: #e53e3e;
+  background-color: #fff5f5;
+}
+
+.errorMessage {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Success States */
+.successState {
+  border-color: #38a169;
+  background-color: #f0fff4;
+}
+
+.successMessage {
+  color: #38a169;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+
+/* Update header text colors */
+.columnHeader h2,
+.columnHeader p,
+.regionalHeader h3,
+.destinationHeader h3 {
+  color: white !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Update header icons to white */
+.columnHeader .headerIcon,
+.regionalHeader .regionalIcon,
+.destinationHeader .destinationIcon {
+  color: white !important;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+/* Update regional and destination section icons to darker color */
+.regionalItemIcon,
+.sectionIcon {
+  color: #1a365d !important;
+  opacity: 0.9;
+}
+
+/* Ensure all text in gradient headers is white */
+.columnHeader .duration,
+.columnHeader .headerSubtitle {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Update section icons in cards to be darker */
+.regionalItem .regionalItemIcon,
+.destinationContent .sectionIcon {
+  color: #1a365d !important;
+  opacity: 0.9;
+}
+
+/* Ensure contrast for section headers */
+.sectionHeader h4 {
+  color: #1a365d !important;
+  font-weight: 600;
+}
+
+/* Update heading styles for better hierarchy */
+.regionalHeader h3,
+.destinationHeader h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: white !important;
+  margin: 0;
+}
+
+.sectionHeader h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white !important;
+  margin: 0;
+}
+
+/* Update other h3 and h4 instances for consistency */
+.seasonCard h3,
+.regionalItemTitle,
+.microInfoItem h3 {
+  font-size: 1.4rem;
+  color: #1a365d;
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.attractionsSection h4,
+.activitiesSection h4,
+.traditions h4,
+.locations h4 {
+  font-size: 1.2rem;
+  color: #1a365d;
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+/* Update activity section icons to white */
+.sectionHeader .sectionIcon {
+  color: white !important;
+  opacity: 0.9;
+}
+
+/* Update holiday headers */
+.columnHeader {
+  background: linear-gradient(135deg, 
+    var(--landing-primary),
+    var(--landing-secondary)
+  );
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.columnHeader h2,
+.columnHeader p,
+.columnHeader .headerIcon {
+  color: white !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure holiday column headers are white */
+.holidayColumn:nth-child(1) .headerIcon,
+.holidayColumn:nth-child(2) .headerIcon {
+  color: white !important;
+  opacity: 0.9;
+}
+
+.holidayColumn:nth-child(1) .columnHeader h2,
+.holidayColumn:nth-child(2) .columnHeader h2 {
+  color: white !important;
+}
+
+/* Keep only content icons dark */
+.regionalItem .regionalItemIcon {
+  color: #1a365d !important;
+  opacity: 0.9;
+}
+
+/* Ensure section headers in cards have white text and icons */
+.sectionHeader {
+  background: linear-gradient(135deg, 
+    var(--landing-primary),
+    var(--landing-secondary)
+  );
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sectionHeader h4,
+.sectionHeader .sectionIcon {
+  color: white !important;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Call to Action Section */
+.ctaSection {
+  width: 100%;
+  margin: 4rem auto 0;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--landing-primary) 15%, white 85%),
+    color-mix(in srgb, var(--landing-secondary) 15%, white 85%)
+  );
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.ctaSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(66, 153, 225, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(236, 110, 241, 0.1) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.ctaContent {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1a365d;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.ctaDescription {
+  font-size: 1.25rem;
+  color: #4a5568;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  background: linear-gradient(135deg,
+    var(--landing-primary),
+    var(--landing-secondary)
+  );
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.ctaIcon {
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+.ctaButton:hover .ctaIcon {
+  transform: translateX(4px);
+}
+
+/* Footer */
+.footer {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  margin-top: 4rem;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer p {
+  color: #4a5568;
+  margin-bottom: 1rem;
+}
+
+.footer nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.footer a {
+  color: var(--landing-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.footer a:hover {
+  color: var(--landing-secondary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ctaSection {
+    padding: 3rem 1.5rem;
+    margin: 3rem auto 0;
+  }
+
+  .ctaTitle {
+    font-size: 2rem;
+  }
+
+  .ctaDescription {
+    font-size: 1.1rem;
+  }
+
+  .ctaButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer nav {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .holidayColumn:first-child .holidayList {
+    grid-template-columns: 1fr;
+  }
+  
+  .holidayGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .holidayOverview,
+  .stateOverviewSection,
+  .seasonalSection,
+  .vacationSection,
+  .regionalSection,
+  .ctaSection {
+    width: calc(100% - 2rem);
+  }
+  
+  .holidayGrid {
+    padding: 0 1rem;
+  }
+}
+
+/* Update header text styles - remove background for column headers */
+.columnHeader h2 {
+  color: white !important;
+  position: relative;
+  z-index: 1;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Adjust spacing between holiday date and name */
+.holidayColumn:nth-child(1) .holidayDate {
+  min-width: 120px;
+  margin-right: 1rem;
+}
+
+.holidayColumn:nth-child(2) .holidayDate {
+  min-width: 120px;
+  margin-right: 1rem;
+}
+
+/* Column Header Styles */
+.columnHeader h2 {
+  color: white !important;
+  margin: 0;
+  font-weight: 600;
+  -webkit-text-fill-color: white !important;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  /* Hero Section Adjustments */
+  .stateHeader {
+    min-height: 400px;
+    padding-bottom: 2rem;
+  }
+
+  /* Hide decorative animations on mobile */
+  .seasonalDecorations {
+    display: none;
+  }
+
+  /* Optimize content spacing */
+  .holidayOverview,
+  .stateOverviewSection,
+  .seasonalSection,
+  .vacationSection,
+  .regionalSection {
+    width: 100%;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  /* Adjust holiday grid for better mobile view */
+  .holidayGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Optimize holiday rows for mobile */
+  .holidayRow {
+    padding: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .holidayDate {
+    min-width: auto;
+    width: 100%;
+    margin-right: 0;
+    font-size: 0.9rem;
+  }
+
+  .holidayName {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .duration {
+    margin-left: 0;
+    width: auto;
+  }
+
+  /* Optimize section headers */
+  .columnHeader {
+    padding: 1rem;
+  }
+
+  .columnHeader h2 {
+    font-size: 1.25rem;
+  }
+
+  /* Adjust micro info bar for mobile */
+  .microInfoBar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .microInfoItem {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Optimize seasonal and regional sections */
+  .seasonalTraditions,
+  .regionalGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .seasonCard,
+  .regionalCard {
+    padding: 1rem;
+  }
+
+  /* Adjust section titles */
+  .holidayOverview h2,
+  .stateOverviewSection h2,
+  .seasonalSection h2,
+  .vacationSection h2,
+  .regionalSection h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 0;
+  }
+
+  /* Optimize vacation cards */
+  .vacationGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .vacationCard {
+    padding: 1rem;
+  }
+
+  /* Enhance touch targets for better accessibility */
+  .holidayRow,
+  .microInfoItem,
+  .seasonCard,
+  .regionalCard,
+  .vacationCard {
+    min-height: 44px; /* iOS minimum touch target size */
+  }
+
+  /* Improve readability */
+  .stateDescription {
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 1rem;
+    text-align: left;
+  }
+}
+
+/* Tablet Optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .holidayOverview,
+  .stateOverviewSection,
+  .seasonalSection,
+  .vacationSection,
+  .regionalSection {
+    width: calc(100% - 2rem);
+    margin: 1.5rem auto;
+    padding: 1.5rem;
+  }
+
+  .holidayGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .seasonalTraditions,
+  .regionalGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vacationGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Ensure proper spacing and readability across all devices */
+.holidayRow,
+.microInfoItem,
+.seasonCard,
+.regionalCard,
+.vacationCard {
+  transition: transform 0.2s ease;
+}
+
+/* Focus states for accessibility */
+.holidayRow:focus-visible,
+.microInfoItem:focus-visible,
+.seasonCard:focus-visible,
+.regionalCard:focus-visible,
+.vacationCard:focus-visible {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .holidayRow,
+  .microInfoItem,
+  .seasonCard,
+  .regionalCard,
+  .vacationCard {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  /* Hide seasonal decorations on mobile */
+  .seasonalDecorations {
+    display: none;
+  }
+
+  /* Optimize holiday lists */
+  .holidayList {
+    padding: 0.75rem !important;
+  }
+
+  .holidayRow {
+    padding: 1rem !important;
+    min-height: 44px; /* Minimum touch target size */
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .holidayDate {
+    width: 100%;
+    min-width: unset !important;
+    margin-right: 0 !important;
+    font-size: 0.9rem;
+  }
+
+  .holidayName {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .duration {
+    margin-left: 0;
+    width: auto;
+  }
+
+  /* Optimize section headers */
+  .columnHeader {
+    padding: 1rem !important;
+  }
+
+  .columnHeader h2 {
+    font-size: 1.25rem;
+    color: white !important;
+  }
+
+  /* Optimize micro info bar */
+  .microInfoBar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .microInfoItem {
+    width: 100%;
+    justify-content: space-between;
+    min-height: 44px;
+  }
+
+  /* Optimize seasonal and regional sections */
+  .seasonalTraditions,
+  .regionalGrid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
+  .seasonCard,
+  .regionalCard {
+    padding: 1rem;
+    min-height: 44px;
+  }
+
+  /* Optimize vacation cards */
+  .vacationGrid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .vacationCard {
+    padding: 1rem;
+    min-height: 44px;
+  }
+
+  /* Improve readability */
+  .stateDescription {
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 1rem;
+    text-align: left;
+  }
+
+  /* Optimize CTA section */
+  .ctaSection {
+    padding: 2rem 1rem;
+  }
+
+  .ctaTitle {
+    font-size: 1.75rem;
+  }
+
+  .ctaButton {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  /* Optimize footer */
+  .footer {
+    padding: 1.5rem 1rem;
+  }
+
+  .footer nav {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Tablet Optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .holidayGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .seasonalTraditions,
+  .regionalGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vacationGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Fix header text colors */
+.columnHeader h2,
+.columnHeader p,
+.columnHeader .headerIcon {
+  color: white !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure proper spacing */
+.holidayColumn:nth-child(1) .holidayDate,
+.holidayColumn:nth-child(2) .holidayDate {
+  min-width: 120px;
+  margin-right: 1rem;
+}
+
+/* Enhance touch targets */
+.holidayRow,
+.microInfoItem,
+.seasonCard,
+.regionalCard,
+.vacationCard,
+.ctaButton,
+.footer a {
+  min-height: 44px;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  /* Full width holiday grid and columns */
+  .holidayGrid {
+    padding: 0;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .holidayColumn {
+    border-radius: 16px;
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Compact holiday lists */
+  .holidayList {
+    padding: 0.5rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .holidayItem {
+    margin: 0;
+    border-radius: 8px;
+  }
+
+  .holidayRow {
+    padding: 0.5rem 0.75rem !important;
+    min-height: 36px;
+    gap: 0.5rem;
+  }
+
+  .holidayDate {
+    min-width: 90px !important;
+    font-size: 0.8rem;
+    margin-right: 0.5rem !important;
+  }
+
+  .holidayName {
+    font-size: 0.85rem;
+  }
+
+  .duration {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+    margin-left: 0.5rem;
+  }
+
+  .regionalBadge {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+    margin-left: 0.5rem;
+  }
+
+  /* Adjust column headers for mobile */
+  .columnHeader {
+    padding: 0.75rem 1rem !important;
+  }
+
+  .columnHeader h2 {
+    font-size: 1.1rem;
+  }
+
+  /* Remove unnecessary margins */
+  .holidayOverview,
+  .stateOverviewSection,
+  .seasonalSection,
+  .vacationSection,
+  .regionalSection,
+  .ctaSection {
+    width: 100%;
+    margin: 1rem 0;
+    padding: 1rem 0;
+  }
+}
+
+.familyActivities {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.familyActivities h4 {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.familyActivities ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.familyActivities li {
+  padding: 0.5rem 0;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.familyActivities li::before {
+  content: "•";
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+/* Promo Section Styles */
+.plannerPromo {
+  background: linear-gradient(135deg,
+    rgba(var(--landing-primary-rgb), 0.9),
+    rgba(var(--landing-secondary-rgb), 0.95)
+  );
+  padding: 4rem 2rem;
+  margin: 4rem auto 2rem;
+  color: white;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  width: calc(100% - 4rem);
+  max-width: 1600px;
+}
+
+.plannerPromo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(66, 153, 225, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(236, 110, 241, 0.1) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.promoContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.promoStats {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.promoStat {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  transition: transform 0.3s ease;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.promoStat:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.promoValue {
+  display: block;
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, white, rgba(255, 255, 255, 0.8));
+  -webkit-background-clip: text;
+  
+}
+
+.promoLabel {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.promoText {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.promoText h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, white, rgba(255, 255, 255, 0.9));
+  -webkit-background-clip: text;
+}
+
+.promoText p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.promoFeatures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.promoFeature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.promoFeature:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(5px);
+}
+
+.promoIcon {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  color: white;
+}
+
+.promoCTA {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--primary-button-color, #4299e1);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.promoCTA:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--primary-button-color, #2b6cb0);
+}
+
+.promoArrow {
+  transition: transform 0.3s ease;
+}
+
+.promoCTA:hover .promoArrow {
+  transform: translateX(5px);
+}
+
+@media (max-width: 1024px) {
+  .promoContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .promoStats {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .promoStat {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .plannerPromo {
+    padding: 2rem 1rem;
+    margin: 2rem auto;
+    width: calc(100% - 2rem);
+  }
+
+  .promoStats {
+    flex-direction: column;
+  }
+
+  .promoFeatures {
+    grid-template-columns: 1fr;
+  }
+
+  .promoText h2 {
+    font-size: 1.75rem;
+  }
+
+  .promoCTA {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Replace global role selectors with scoped classes */
+.interactiveElement {
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.interactiveElement:focus {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
+}
+
+/* Convert focus-visible to a class */
+.focusVisible {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
+}
+
+.holidayColumn:nth-child(1) .headerIcon,
+.holidayColumn:nth-child(2) .headerIcon {
+  color: white !important;
+  font-size: 1.25rem !important;
+  opacity: 0.9;
+  margin-right: 0.5rem;
+}
+
+.holidayColumn .columnHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.holidayColumn .columnHeader h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.holidayIcon {
+  font-size: 0.9rem !important;
+  opacity: 0.8;
+  margin-right: 0.5rem;
+}
+
+/* Update other icon sizes */
+.microInfoIcon,
+.regionalItemIcon,
+.destinationIcon,
+.sectionIcon {
+  font-size: 0.9rem !important;
+  opacity: 0.9;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .holidayColumn:nth-child(1) .headerIcon,
+  .holidayColumn:nth-child(2) .headerIcon {
+    font-size: 1.1rem !important;
+  }
+
+  .holidayColumn .columnHeader h2 {
+    font-size: 1.1rem;
+  }
+
+  .holidayIcon {
+    font-size: 0.8rem !important;
+  }
+}
+
+/* Cultural Highlights Section */
+.culturalSection {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 3%, white 97%),
+    color-mix(in srgb, var(--landing-secondary) 5%, white 95%)
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 24px;
+  margin: 2rem auto;
+  max-width: 1600px;
+  width: calc(100% - 4rem);
+  overflow: hidden;
+  box-shadow: 
+    0 4px 20px rgba(26, 54, 93, 0.03),
+    0 2px 8px rgba(26, 54, 93, 0.02);
+  padding: 2rem;
+}
+
+.culturalSection h2 {
+  color: #1a365d;
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
+  position: relative;
+  letter-spacing: -0.02em;
+}
+
+.culturalSection h2::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(135deg, 
+    var(--landing-primary),
+    var(--landing-secondary)
+  );
+  border-radius: 2px;
+}
+
+.culturalGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.culturalCard {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 2%, white 98%),
+    color-mix(in srgb, var(--theme-primary) 3%, white 97%)
+  );
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.culturalCard:hover {
+  transform: var(--hover-transform);
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 4%, white 96%),
+    color-mix(in srgb, var(--theme-primary) 5%, white 95%)
+  );
+  border-color: rgba(26, 54, 93, 0.12);
+}
+
+.culturalCard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.03)
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.culturalCard:hover::after {
+  opacity: 1;
+}
+
+.culturalIcon {
+  font-size: 1.5rem;
+  color: var(--theme-primary);
+  opacity: 0.9;
+  transition: transform var(--transition-normal);
+}
+
+.culturalCard:hover .culturalIcon {
+  transform: scale(1.1);
+}
+
+.culturalCard h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .culturalSection {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+  }
+
+  .culturalSection h2 {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .culturalGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .culturalCard {
+    padding: 1.25rem;
+  }
+
+  .culturalCard h3 {
+    font-size: 1rem;
+  }
+}
+
+/* Holiday Info Section */
+.holidayInfoSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 0 0.75rem;
+}
+
+.infoCard {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 2%, white 98%),
+    color-mix(in srgb, var(--theme-primary) 3%, white 97%)
+  );
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 
+    0 4px 6px rgba(26, 54, 93, 0.02),
+    0 1px 3px rgba(26, 54, 93, 0.04);
+  transition: all var(--transition-normal);
+}
+
+.infoCard:hover {
+  transform: var(--hover-transform);
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 4%, white 96%),
+    color-mix(in srgb, var(--theme-primary) 5%, white 95%)
+  );
+  border-color: rgba(26, 54, 93, 0.12);
+}
+
+.infoCard h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.infoCard p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .holidayInfoSection {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .infoCard {
+    padding: 1.25rem;
+  }
+
+  .infoCard h3 {
+    font-size: 1.1rem;
+  }
+
+  .infoCard p {
+    font-size: 0.9rem;
+  }
+}
+
+.holidayInfo {
+  text-align: center;
+  max-width: 800px;
+  margin: 2rem auto 0;
+  padding: 1.5rem;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--state-primary-color) 2%, white 98%),
+    color-mix(in srgb, var(--theme-primary) 3%, white 97%)
+  );
+  border: 1px solid rgba(26, 54, 93, 0.08);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 6px rgba(26, 54, 93, 0.02),
+    0 1px 3px rgba(26, 54, 93, 0.04);
+}
+
+.holidayInfo h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.holidayInfo p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .holidayInfo {
+    margin: 1.5rem auto 0;
+    padding: 1.25rem;
+  }
+
+  .holidayInfo h3 {
+    font-size: 1.1rem;
+  }
+
+  .holidayInfo p {
+    font-size: 0.9rem;
+  }
+}

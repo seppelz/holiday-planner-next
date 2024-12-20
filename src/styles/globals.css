@@ -1,0 +1,78 @@
+/* Global variables */
+:root {
+  /* Brand Colors - Dynamic from State (only for hero) */
+  --state-primary-color: var(--state-color-1, #0077b6);
+  --state-secondary-color: var(--state-color-2, #023e8a);
+  
+  /* Landing Page Colors */
+  --landing-primary: #0077b6;
+  --landing-secondary: #20b2aa;
+  
+  /* Theme Colors */
+  --theme-primary: #023e8a;
+  --theme-secondary: #0077b6;
+  --theme-accent: #20b2aa;
+  
+  /* Background Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7fafc;
+  --bg-tertiary: #edf2f7;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  
+  /* Text Colors */
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-tertiary: #718096;
+  --text-on-brand: #ffffff;
+  
+  /* Interactive States */
+  --hover-opacity: 0.9;
+  --active-opacity: 0.8;
+  --hover-transform: translateY(-2px);
+  --active-transform: translateY(0);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 20px 25px rgba(0, 0, 0, 0.1);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+}
+
+/* Global styles */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(26, 54, 93, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    135deg,
+    var(--landing-primary),
+    var(--landing-secondary)
+  );
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Selection styles */
+::selection {
+  background: color-mix(in srgb, var(--landing-primary) 30%, transparent 70%);
+  color: inherit;
+} 

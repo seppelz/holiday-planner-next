@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main Calendar -->
+  <rect class="calendarFrame" x="50" y="50" width="240" height="280" rx="15" fill="white" />
+  <rect class="calendarHeader" x="50" y="50" width="240" height="60" rx="15" fill="#4F46E5" />
+  
+  <!-- Calendar Days -->
+  <g class="calendarDays">
+    <!-- Row 1 -->
+    <rect x="70" y="130" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="100" y="130" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="130" y="130" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="160" y="130" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="190" y="130" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="220" y="130" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="250" y="130" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <!-- Row 2 -->
+    <rect x="70" y="170" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="100" y="170" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="130" y="170" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="160" y="170" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="190" y="170" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="220" y="170" width="25" height="25" rx="5" fill="#F3F4F6" />
+    <rect x="250" y="170" width="25" height="25" rx="5" fill="#F3F4F6" />
+  </g>
+
+  <!-- Highlighted Vacation Period -->
+  <g class="vacationPeriod">
+    <rect x="100" y="170" width="85" height="25" rx="5" fill="rgba(79, 70, 229, 0.2)" stroke="#4F46E5" stroke-width="2">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" />
+    </rect>
+    <path d="M185 182.5 L215 182.5" stroke="#4F46E5" stroke-width="2" stroke-dasharray="4">
+      <animate attributeName="stroke-dashoffset" values="8;0" dur="1s" repeatCount="indefinite" />
+    </path>
+    <rect x="215" y="170" width="55" height="25" rx="5" fill="rgba(79, 70, 229, 0.2)" stroke="#4F46E5" stroke-width="2">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" />
+    </rect>
+  </g>
+
+  <!-- Palm Tree -->
+  <g class="palmTree">
+    <path d="M380 280 C380 280, 360 250, 390 220 C420 190, 400 160, 380 150" stroke="#22C55E" stroke-width="3" fill="none">
+      <animate attributeName="d" values="M380 280 C380 280, 360 250, 390 220 C420 190, 400 160, 380 150;M380 280 C380 280, 365 245, 395 215 C425 185, 405 155, 385 145;M380 280 C380 280, 360 250, 390 220 C420 190, 400 160, 380 150" dur="4s" repeatCount="indefinite" />
+    </path>
+    <path d="M380 280 C380 280, 400 250, 370 220 C340 190, 360 160, 380 150" stroke="#22C55E" stroke-width="3" fill="none">
+      <animate attributeName="d" values="M380 280 C380 280, 400 250, 370 220 C340 190, 360 160, 380 150;M380 280 C380 280, 405 245, 375 215 C345 185, 365 155, 385 145;M380 280 C380 280, 400 250, 370 220 C340 190, 360 160, 380 150" dur="4s" repeatCount="indefinite" />
+    </path>
+    <rect x="375" y="280" width="10" height="40" fill="#7C3AED" />
+  </g>
+
+  <!-- Beach Elements -->
+  <path d="M320 320 Q380 300, 440 320" stroke="#60A5FA" stroke-width="2" fill="none" opacity="0.6">
+    <animate attributeName="d" values="M320 320 Q380 300, 440 320;M320 320 Q380 310, 440 320;M320 320 Q380 300, 440 320" dur="5s" repeatCount="indefinite" />
+  </path>
+  <path d="M300 340 Q380 320, 460 340" stroke="#60A5FA" stroke-width="2" fill="none" opacity="0.4">
+    <animate attributeName="d" values="M300 340 Q380 320, 460 340;M300 340 Q380 330, 460 340;M300 340 Q380 320, 460 340" dur="5s" repeatCount="indefinite" />
+  </path>
+
+  <!-- Sun with Dynamic Rays -->
+  <g class="sunGroup">
+    <circle cx="420" cy="100" r="25" fill="#FBBF24">
+      <animate attributeName="r" values="25;27;25" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <!-- Sun Rays -->
+    <line x1="420" y1="60" x2="420" y2="70" stroke="#FBBF24" stroke-width="2">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line x1="420" y1="130" x2="420" y2="140" stroke="#FBBF24" stroke-width="2">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line x1="380" y1="100" x2="390" y2="100" stroke="#FBBF24" stroke-width="2">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+    </line>
+    <line x1="450" y1="100" x2="460" y2="100" stroke="#FBBF24" stroke-width="2">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+    </line>
+  </g>
+
+  <!-- Floating Icons -->
+  <g class="floatingIcons">
+    <path class="planeIcon" d="M320 150 L350 130 L360 140 L320 150 L340 170 L320 150" fill="#60A5FA">
+      <animateTransform attributeName="transform" type="translate" values="0,0; -20,-10; 0,0" dur="6s" repeatCount="indefinite" />
+    </path>
+    <circle class="beachBall" cx="450" cy="180" r="10" fill="#F87171">
+      <animate attributeName="cy" values="180;175;180" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <path class="umbrella" d="M280 200 L290 190 L300 200 L290 210 Z" fill="#F472B6">
+      <animateTransform attributeName="transform" type="rotate" values="0 290 200;15 290 200;0 290 200" dur="3s" repeatCount="indefinite" />
+    </path>
+  </g>
+
+  <!-- Check Marks -->
+  <path d="M145 180 l5 5 l10 -10" stroke="#4F46E5" stroke-width="2" fill="none" />
+  <path d="M175 180 l5 5 l10 -10" stroke="#4F46E5" stroke-width="2" fill="none" />
+  <path d="M205 180 l5 5 l10 -10" stroke="#4F46E5" stroke-width="2" fill="none" />
+</svg> 
