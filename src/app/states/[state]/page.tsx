@@ -209,19 +209,15 @@ export default function StatePage({ params }: StatePageProps) {
         />
         <div className={styles.statePageContent}>
           <header className={styles.stateHeader} style={{
-            background: tertiaryColor 
-              ? `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 50%, ${tertiaryColor} 100%)`
-              : `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`
+            background: 'var(--state-gradient-hero)'
           }}>
             <div className={styles.animatedBackground} style={{
-              background: tertiaryColor 
-                ? `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 50%, ${tertiaryColor} 100%)`
-                : `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`
+              background: 'var(--state-gradient-hero)'
             }}>
               <div className={styles.celestialBody} style={{
-                '--state-primary-color': primaryColor,
-                '--state-secondary-color': secondaryColor,
-                '--state-tertiary-color': tertiaryColor || secondaryColor
+                '--state-primary-color': 'var(--state-primary-color)',
+                '--state-secondary-color': 'var(--state-secondary-color)',
+                '--state-tertiary-color': tertiaryColor ? 'var(--state-tertiary-color)' : 'var(--state-secondary-color)'
               } as React.CSSProperties} />
               
               <div className={styles.cloud} style={{ '--state-primary-color': 'var(--state-primary-lighter)' } as React.CSSProperties} />
@@ -303,46 +299,72 @@ export default function StatePage({ params }: StatePageProps) {
                 </div>
               </div>
 
-              <div className={styles.headerOverlay} />
+              <div className={styles.headerOverlay} style={{
+                background: `linear-gradient(
+                  135deg,
+                  rgba(0, 0, 0, 0.2) 0%,
+                  rgba(0, 0, 0, 0.1) 50%,
+                  rgba(0, 0, 0, 0.05) 100%
+                )`,
+                mixBlendMode: 'multiply'
+              }} />
               <div className={styles.headerContent}>
                 <div className={styles.heroStats}>
                   <div className={styles.statBadge} style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    color: '#ffffff'
+                    background: 'var(--state-primary-alpha-10)',
+                    color: 'var(--state-text-on-hero)',
+                    backdropFilter: 'blur(8px)',
+                    WebkitBackdropFilter: 'blur(8px)'
                   }}>
                     <span className={styles.statNumber}>{publicHolidays.length}</span>
                     <span className={styles.statLabel}>Feiertage</span>
                   </div>
-                  <div className={styles.statDivider} style={{ background: 'rgba(255, 255, 255, 0.2)' }} />
+                  <div className={styles.statDivider} style={{ 
+                    background: 'var(--state-primary-alpha-20)'
+                  }} />
                   <div className={styles.statBadge} style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    color: '#ffffff'
+                    background: 'var(--state-primary-alpha-10)',
+                    color: 'var(--state-text-on-hero)',
+                    backdropFilter: 'blur(8px)',
+                    WebkitBackdropFilter: 'blur(8px)'
                   }}>
                     <span className={styles.statNumber}>{regionalHolidays.length}</span>
                     <span className={styles.statLabel}>Regionale Feiertage</span>
                   </div>
-                  <div className={styles.statDivider} style={{ background: 'rgba(255, 255, 255, 0.2)' }} />
+                  <div className={styles.statDivider} style={{ 
+                    background: 'var(--state-primary-alpha-20)'
+                  }} />
                   <div className={styles.statBadge} style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    color: '#ffffff'
+                    background: 'var(--state-primary-alpha-10)',
+                    color: 'var(--state-text-on-hero)',
+                    backdropFilter: 'blur(8px)',
+                    WebkitBackdropFilter: 'blur(8px)'
                   }}>
                     <span className={styles.statNumber}>{totalSchoolHolidayDays}</span>
                     <span className={styles.statLabel}>Ferientage</span>
                   </div>
                 </div>
-                <h1 className={styles.heroTitle} style={{ color: '#ffffff' }}>
+                <h1 className={styles.heroTitle} style={{ 
+                  color: 'var(--state-text-on-hero)',
+                  textShadow: '0 2px 4px rgba(0, 0, 0, 0.15)'
+                }}>
                   Feiertage und Schulferien in {fullName} 2025
                 </h1>
-                <p className={styles.heroSubtitle} style={{ color: '#ffffff' }}>
+                <p className={styles.heroSubtitle} style={{ 
+                  color: 'var(--state-text-on-hero)',
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
+                }}>
                   Maximieren Sie Ihren Urlaub in {fullName} mit unserem intelligenten Urlaubsplaner.
                   Nutzen Sie {publicHolidays.length + regionalHolidays.length} Feiertage für optimale Brückentage.
                 </p>
                 <div className={styles.heroActions}>
                   <Link href="/planner" className={styles.primaryButton} style={{
-                    background: 'rgba(255, 255, 255, 0.15)',
-                    color: '#ffffff',
-                    borderColor: 'rgba(255, 255, 255, 0.2)',
-                    '--hover-color': 'rgba(255, 255, 255, 0.25)'
+                    background: 'var(--state-primary-alpha-20)',
+                    color: 'var(--state-text-on-hero)',
+                    borderColor: 'var(--state-primary-alpha-10)',
+                    backdropFilter: 'blur(4px)',
+                    WebkitBackdropFilter: 'blur(4px)',
+                    '--hover-color': 'var(--state-hover-overlay)'
                   } as React.CSSProperties}>
                     Urlaubsplaner starten
                     <span className={styles.buttonIcon}>→</span>

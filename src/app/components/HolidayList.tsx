@@ -63,7 +63,7 @@ export default function HolidayList({
   primaryColor,
   secondaryColor
 }: HolidayListProps) {
-  const [expandedHolidays, setExpandedHolidays] = useState<number[]>([]);
+  const [expandedHolidays, setExpandedHolidays] = useState<string[]>([]);
 
   const allPublicHolidays = [...publicHolidays, ...regionalHolidays]
     .sort((a, b) => {
@@ -105,37 +105,51 @@ export default function HolidayList({
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: '1fr 1fr', 
-          gap: '0.5rem', 
-          padding: '0.75rem',
-          background: 'var(--bg-card)'
+          gap: '1rem', 
+          padding: '1.5rem',
+          background: '#ffffff',
+          borderBottomLeftRadius: '1rem',
+          borderBottomRightRadius: '1rem'
         }}>
           <div>
             {firstColumnHolidays.map((holiday, index) => {
               if (!holiday.start) return null;
-              const isExpanded = expandedHolidays.includes(index);
+              const isExpanded = expandedHolidays.includes(`public-${index}`);
 
               return (
-                <div key={index} className={styles.holidayItem} style={{ 
-                  marginBottom: '0.25rem',
-                  background: 'var(--bg-card)',
-                  borderColor: 'var(--state-border-light)',
-                  color: 'var(--text-primary)'
+                <div key={index} style={{ 
+                  marginBottom: isExpanded ? '1rem' : '0.75rem',
+                  position: 'relative'
                 }}>
-                  <div className={styles.holidayRow} style={{ padding: '0.5rem 0.75rem' }}>
-                    <div className={styles.holidayDate} style={{ 
+                  <div style={{ 
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '1rem',
+                    padding: '0.25rem 0'
+                  }}>
+                    <div style={{ 
                       fontSize: '0.85rem',
-                      color: 'var(--text-secondary)'
+                      color: '#666666',
+                      minWidth: '2.5rem'
                     }}>
                       {formatDate(holiday.start)}
                     </div>
-                    <div className={styles.holidayName} style={{ fontSize: '0.9rem' }}>
+                    <div style={{ 
+                      flex: 1,
+                      fontSize: '0.9rem',
+                      color: '#1a1a1a',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem'
+                    }}>
                       {holiday.name}
                       {holiday.isRegional && (
-                        <span className={styles.regionalBadge} style={{ 
+                        <span style={{ 
                           fontSize: '0.75rem',
                           padding: '0.1rem 0.5rem',
-                          background: 'var(--state-primary-lighter)',
-                          color: 'var(--state-text-on-primary)'
+                          background: '#f0f0f0',
+                          color: '#666666',
+                          borderRadius: '4px'
                         }}>Regional</span>
                       )}
                     </div>
@@ -147,47 +161,118 @@ export default function HolidayList({
                         onClick={() => {
                           setExpandedHolidays(prev => 
                             isExpanded 
-                              ? prev.filter(i => i !== index)
-                              : [...prev, index]
+                              ? prev.filter(i => i !== `public-${index}`)
+                              : [...prev, `public-${index}`]
                           );
                         }}
-                        style={{ padding: '0.25rem' }}
+                        style={{ 
+                          padding: '0.25rem',
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          color: '#666666',
+                          transition: 'transform 0.2s ease'
+                        }}
                       >
                         <FontAwesomeIcon 
                           icon={faPlus} 
-                          className={styles.expandIcon}
-                          style={{ fontSize: '0.8rem' }}
+                          style={{ 
+                            fontSize: '0.8rem',
+                            transform: isExpanded ? 'rotate(45deg)' : 'none'
+                          }}
                         />
                       </button>
                     )}
                   </div>
                   {holiday.details && isExpanded && (
-                    <div className={styles.holidayDetails}>
+                    <div style={{
+                      marginTop: '0.5rem',
+                      marginLeft: '3.5rem',
+                      padding: '0.75rem',
+                      background: '#f8f8f8',
+                      borderRadius: '0.5rem',
+                      fontSize: '0.9rem',
+                      color: '#444444'
+                    }}>
                       {holiday.details.description && (
-                        <p className={styles.description}>{holiday.details.description}</p>
+                        <p style={{ marginBottom: '0.75rem' }}>{holiday.details.description}</p>
                       )}
                       {holiday.details.traditions && holiday.details.traditions.length > 0 && (
-                        <div className={styles.traditions}>
-                          <h4>
-                            <FontAwesomeIcon icon={faTrademark} className={styles.traditionIcon} />
+                        <div style={{ marginBottom: '0.75rem' }}>
+                          <h4 style={{ 
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            fontSize: '0.85rem',
+                            fontWeight: '600',
+                            marginBottom: '0.5rem',
+                            color: '#333333'
+                          }}>
+                            <FontAwesomeIcon icon={faTrademark} style={{ fontSize: '0.8rem' }} />
                             Traditionen
                           </h4>
-                          <ul>
+                          <ul style={{ 
+                            listStyle: 'none',
+                            margin: 0,
+                            padding: 0
+                          }}>
                             {holiday.details.traditions.map((tradition, i) => (
-                              <li key={i}>{tradition}</li>
+                              <li key={i} style={{ 
+                                marginBottom: '0.25rem',
+                                paddingLeft: '1rem',
+                                position: 'relative'
+                              }}>
+                                <span style={{
+                                  position: 'absolute',
+                                  left: 0,
+                                  top: '0.5em',
+                                  width: '4px',
+                                  height: '4px',
+                                  background: '#666666',
+                                  borderRadius: '50%'
+                                }}></span>
+                                {tradition}
+                              </li>
                             ))}
                           </ul>
                         </div>
                       )}
                       {holiday.details.locations && holiday.details.locations.length > 0 && (
-                        <div className={styles.locations}>
-                          <h4>
-                            <FontAwesomeIcon icon={faLocationDot} className={styles.locationIcon} />
+                        <div>
+                          <h4 style={{ 
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            fontSize: '0.85rem',
+                            fontWeight: '600',
+                            marginBottom: '0.5rem',
+                            color: '#333333'
+                          }}>
+                            <FontAwesomeIcon icon={faLocationDot} style={{ fontSize: '0.8rem' }} />
                             Beliebte Orte
                           </h4>
-                          <ul>
+                          <ul style={{ 
+                            listStyle: 'none',
+                            margin: 0,
+                            padding: 0
+                          }}>
                             {holiday.details.locations.map((location, i) => (
-                              <li key={i}>{location}</li>
+                              <li key={i} style={{ 
+                                marginBottom: '0.25rem',
+                                paddingLeft: '1rem',
+                                position: 'relative'
+                              }}>
+                                <span style={{
+                                  position: 'absolute',
+                                  left: 0,
+                                  top: '0.5em',
+                                  width: '4px',
+                                  height: '4px',
+                                  background: '#666666',
+                                  borderRadius: '50%'
+                                }}></span>
+                                {location}
+                              </li>
                             ))}
                           </ul>
                         </div>
@@ -202,18 +287,43 @@ export default function HolidayList({
             {secondColumnHolidays.map((holiday, index) => {
               const actualIndex = index + midPoint;
               if (!holiday.start) return null;
-              const isExpanded = expandedHolidays.includes(actualIndex);
+              const isExpanded = expandedHolidays.includes(`public-${actualIndex}`);
 
               return (
-                <div key={actualIndex} className={styles.holidayItem} style={{ marginBottom: '0.25rem' }}>
-                  <div className={styles.holidayRow} style={{ padding: '0.5rem 0.75rem' }}>
-                    <div className={styles.holidayDate} style={{ fontSize: '0.85rem' }}>
+                <div key={actualIndex} style={{ 
+                  marginBottom: isExpanded ? '1rem' : '0.75rem',
+                  position: 'relative'
+                }}>
+                  <div style={{ 
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '1rem',
+                    padding: '0.25rem 0'
+                  }}>
+                    <div style={{ 
+                      fontSize: '0.85rem',
+                      color: '#666666',
+                      minWidth: '2.5rem'
+                    }}>
                       {formatDate(holiday.start)}
                     </div>
-                    <div className={styles.holidayName} style={{ fontSize: '0.9rem' }}>
+                    <div style={{ 
+                      flex: 1,
+                      fontSize: '0.9rem',
+                      color: '#1a1a1a',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem'
+                    }}>
                       {holiday.name}
                       {holiday.isRegional && (
-                        <span className={styles.regionalBadge} style={{ fontSize: '0.75rem', padding: '0.1rem 0.5rem' }}>Regional</span>
+                        <span style={{ 
+                          fontSize: '0.75rem',
+                          padding: '0.1rem 0.5rem',
+                          background: '#f0f0f0',
+                          color: '#666666',
+                          borderRadius: '4px'
+                        }}>Regional</span>
                       )}
                     </div>
                     {holiday.details && (
@@ -224,47 +334,118 @@ export default function HolidayList({
                         onClick={() => {
                           setExpandedHolidays(prev => 
                             isExpanded 
-                              ? prev.filter(i => i !== actualIndex)
-                              : [...prev, actualIndex]
+                              ? prev.filter(i => i !== `public-${actualIndex}`)
+                              : [...prev, `public-${actualIndex}`]
                           );
                         }}
-                        style={{ padding: '0.25rem' }}
+                        style={{ 
+                          padding: '0.25rem',
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          color: '#666666',
+                          transition: 'transform 0.2s ease'
+                        }}
                       >
                         <FontAwesomeIcon 
                           icon={faPlus} 
-                          className={styles.expandIcon}
-                          style={{ fontSize: '0.8rem' }}
+                          style={{ 
+                            fontSize: '0.8rem',
+                            transform: isExpanded ? 'rotate(45deg)' : 'none'
+                          }}
                         />
                       </button>
                     )}
                   </div>
                   {holiday.details && isExpanded && (
-                    <div className={styles.holidayDetails}>
+                    <div style={{
+                      marginTop: '0.5rem',
+                      marginLeft: '3.5rem',
+                      padding: '0.75rem',
+                      background: '#f8f8f8',
+                      borderRadius: '0.5rem',
+                      fontSize: '0.9rem',
+                      color: '#444444'
+                    }}>
                       {holiday.details.description && (
-                        <p className={styles.description}>{holiday.details.description}</p>
+                        <p style={{ marginBottom: '0.75rem' }}>{holiday.details.description}</p>
                       )}
                       {holiday.details.traditions && holiday.details.traditions.length > 0 && (
-                        <div className={styles.traditions}>
-                          <h4>
-                            <FontAwesomeIcon icon={faTrademark} className={styles.traditionIcon} />
+                        <div style={{ marginBottom: '0.75rem' }}>
+                          <h4 style={{ 
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            fontSize: '0.85rem',
+                            fontWeight: '600',
+                            marginBottom: '0.5rem',
+                            color: '#333333'
+                          }}>
+                            <FontAwesomeIcon icon={faTrademark} style={{ fontSize: '0.8rem' }} />
                             Traditionen
                           </h4>
-                          <ul>
+                          <ul style={{ 
+                            listStyle: 'none',
+                            margin: 0,
+                            padding: 0
+                          }}>
                             {holiday.details.traditions.map((tradition, i) => (
-                              <li key={i}>{tradition}</li>
+                              <li key={i} style={{ 
+                                marginBottom: '0.25rem',
+                                paddingLeft: '1rem',
+                                position: 'relative'
+                              }}>
+                                <span style={{
+                                  position: 'absolute',
+                                  left: 0,
+                                  top: '0.5em',
+                                  width: '4px',
+                                  height: '4px',
+                                  background: '#666666',
+                                  borderRadius: '50%'
+                                }}></span>
+                                {tradition}
+                              </li>
                             ))}
                           </ul>
                         </div>
                       )}
                       {holiday.details.locations && holiday.details.locations.length > 0 && (
-                        <div className={styles.locations}>
-                          <h4>
-                            <FontAwesomeIcon icon={faLocationDot} className={styles.locationIcon} />
+                        <div>
+                          <h4 style={{ 
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            fontSize: '0.85rem',
+                            fontWeight: '600',
+                            marginBottom: '0.5rem',
+                            color: '#333333'
+                          }}>
+                            <FontAwesomeIcon icon={faLocationDot} style={{ fontSize: '0.8rem' }} />
                             Beliebte Orte
                           </h4>
-                          <ul>
+                          <ul style={{ 
+                            listStyle: 'none',
+                            margin: 0,
+                            padding: 0
+                          }}>
                             {holiday.details.locations.map((location, i) => (
-                              <li key={i}>{location}</li>
+                              <li key={i} style={{ 
+                                marginBottom: '0.25rem',
+                                paddingLeft: '1rem',
+                                position: 'relative'
+                              }}>
+                                <span style={{
+                                  position: 'absolute',
+                                  left: 0,
+                                  top: '0.5em',
+                                  width: '4px',
+                                  height: '4px',
+                                  background: '#666666',
+                                  borderRadius: '50%'
+                                }}></span>
+                                {location}
+                              </li>
                             ))}
                           </ul>
                         </div>
@@ -304,37 +485,137 @@ export default function HolidayList({
           </div>
         </div>
         <div style={{ 
-          padding: '0.75rem',
-          background: 'var(--bg-card)'
+          padding: '1.5rem',
+          background: '#ffffff',
+          borderBottomLeftRadius: '1rem',
+          borderBottomRightRadius: '1rem'
         }}>
           {schoolHolidays.map((holiday, index) => {
             if (!holiday.start || !holiday.end) return null;
             const duration = calculateDuration(holiday.start, holiday.end);
+            const isExpanded = expandedHolidays.includes(`school-${index}`);
 
             return (
-              <div key={index} className={styles.holidayItem} style={{ 
-                marginBottom: '0.5rem',
-                background: 'var(--bg-card)',
-                borderColor: 'var(--state-border-light)',
-                color: 'var(--text-primary)'
+              <div key={index} style={{ 
+                marginBottom: isExpanded ? '1rem' : '0.75rem',
+                position: 'relative'
               }}>
-                <div className={styles.holidayRow} style={{ padding: '0.75rem' }}>
-                  <div className={styles.holidayDate} style={{ 
+                <div style={{ 
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '1rem',
+                  padding: '0.25rem 0'
+                }}>
+                  <div style={{ 
                     fontSize: '0.85rem',
-                    color: 'var(--text-secondary)'
+                    color: '#666666',
+                    minWidth: '5rem'
                   }}>
                     {formatDate(holiday.start)} - {formatDate(holiday.end)}
-                    <span className={styles.duration} style={{
-                      background: 'var(--state-primary-lighter)',
-                      color: 'var(--state-text-on-primary)'
+                  </div>
+                  <div style={{ 
+                    flex: 1,
+                    fontSize: '0.9rem',
+                    color: '#1a1a1a',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                  }}>
+                    {holiday.name}
+                    <span style={{
+                      fontSize: '0.75rem',
+                      color: '#666666',
+                      fontWeight: 'normal'
                     }}>
                       {duration} Tage
                     </span>
                   </div>
-                  <div className={styles.holidayName} style={{ fontSize: '0.9rem' }}>
-                    {holiday.name}
-                  </div>
+                  {holiday.details && (
+                    <button 
+                      className={`${styles.expandButton} ${isExpanded ? styles.active : ''}`}
+                      aria-expanded={isExpanded}
+                      aria-label="Details anzeigen"
+                      onClick={() => {
+                        setExpandedHolidays(prev => 
+                          isExpanded 
+                            ? prev.filter(i => i !== `school-${index}`)
+                            : [...prev, `school-${index}`]
+                        );
+                      }}
+                      style={{ 
+                        padding: '0.25rem',
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        color: '#666666',
+                        transition: 'transform 0.2s ease'
+                      }}
+                    >
+                      <FontAwesomeIcon 
+                        icon={faPlus} 
+                        style={{ 
+                          fontSize: '0.8rem',
+                          transform: isExpanded ? 'rotate(45deg)' : 'none'
+                        }}
+                      />
+                    </button>
+                  )}
                 </div>
+                {holiday.details && isExpanded && (
+                  <div style={{
+                    marginTop: '0.5rem',
+                    marginLeft: '6rem',
+                    padding: '0.75rem',
+                    background: '#f8f8f8',
+                    borderRadius: '0.5rem',
+                    fontSize: '0.9rem',
+                    color: '#444444'
+                  }}>
+                    {holiday.details.description && (
+                      <p style={{ marginBottom: '0.75rem' }}>{holiday.details.description}</p>
+                    )}
+                    {holiday.details.familyActivities && holiday.details.familyActivities.length > 0 && (
+                      <div>
+                        <h4 style={{ 
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          fontSize: '0.85rem',
+                          fontWeight: '600',
+                          marginBottom: '0.5rem',
+                          color: '#333333'
+                        }}>
+                          <FontAwesomeIcon icon={faGraduationCap} style={{ fontSize: '0.8rem' }} />
+                          Aktivitäten für Familien
+                        </h4>
+                        <ul style={{ 
+                          listStyle: 'none',
+                          margin: 0,
+                          padding: 0
+                        }}>
+                          {holiday.details.familyActivities.map((activity, i) => (
+                            <li key={i} style={{ 
+                              marginBottom: '0.25rem',
+                              paddingLeft: '1rem',
+                              position: 'relative'
+                            }}>
+                              <span style={{
+                                position: 'absolute',
+                                left: 0,
+                                top: '0.5em',
+                                width: '4px',
+                                height: '4px',
+                                background: '#666666',
+                                borderRadius: '50%'
+                              }}></span>
+                              {activity}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             );
           })}
